@@ -1,6 +1,6 @@
 
 import { useState, ChangeEvent } from "react";
-import { Passport, Plane, Calendar, MapPin } from "lucide-react";
+import { FileCheck, Plane, Calendar, MapPin } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import {
@@ -196,7 +196,7 @@ const TravelSection = ({ formData, updateFormData, onNext, onPrevious }: TravelS
               Autre
             </label>
             <div className="relative">
-              <Passport size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <FileCheck size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 id="otherAssistance"

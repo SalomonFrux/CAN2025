@@ -1,6 +1,5 @@
-
 import { useState, ChangeEvent } from "react";
-import { User, Calendar, Flag, Passport, Phone, Mail, MapPin, UserCheck } from "lucide-react";
+import { User, Calendar, Flag, FileCheck, Phone, Mail, MapPin, UserCheck } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import {
@@ -33,7 +32,6 @@ const PersonalInfoSection = ({ formData, updateFormData, onNext }: PersonalInfoS
       updateFormData({ [name]: value });
     }
     
-    // Clear error when user types
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = {...prev};
@@ -84,7 +82,6 @@ const PersonalInfoSection = ({ formData, updateFormData, onNext }: PersonalInfoS
       newErrors.address = "Veuillez saisir votre adresse";
     }
     
-    // If supportedTeam is checked, teamName is required
     if (formData.supportedTeam && !formData.teamName?.trim()) {
       newErrors.teamName = "Veuillez saisir le nom de l'équipe supportée";
     }
@@ -97,7 +94,6 @@ const PersonalInfoSection = ({ formData, updateFormData, onNext }: PersonalInfoS
     if (validateForm()) {
       onNext();
     } else {
-      // Scroll to first error
       const firstError = document.querySelector('.error-message');
       if (firstError) {
         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -253,7 +249,7 @@ const PersonalInfoSection = ({ formData, updateFormData, onNext }: PersonalInfoS
             Numéro de passeport
           </label>
           <div className="relative">
-            <Passport size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <FileCheck size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               id="passportNumber"
