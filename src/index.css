@@ -1,10 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 99%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -13,16 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 75% 42%;  /* Morocco Red */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 150 100% 19%; /* Morocco Green */
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 27 23% 90%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 42 75% 63%;  /* Morocco Gold */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -61,17 +55,17 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 75% 42%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 150 100% 19%;
+    --secondary-foreground: 0 0% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 42 75% 63%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -79,6 +73,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -95,7 +90,183 @@
     @apply border-border;
   }
 
+  html, body {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl font-bold md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg font-semibold md:text-xl;
+  }
+
+  h6 {
+    @apply text-base font-semibold md:text-lg;
+  }
+
+  input, select, textarea {
+    @apply transition-all duration-200;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .section-title {
+    @apply text-xl font-medium relative inline-block;
+  }
+
+  .section-title::after {
+    content: "";
+    @apply absolute bottom-0 left-0 w-full h-[2px] bg-morocco-red transform origin-bottom-left transition-all duration-300;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl shadow-subtle;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  }
+
+  .form-input-wrapper {
+    @apply relative mb-4;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-morocco-gold focus:ring-1 focus:ring-morocco-gold transition-all duration-200 bg-white/80;
+  }
+
+  .input-icon {
+    @apply absolute left-3 top-9 text-gray-400;
+  }
+
+  .input-with-icon {
+    @apply pl-10;
+  }
+
+  .morocco-button {
+    @apply relative px-6 py-3 bg-morocco-red text-white font-semibold rounded-lg 
+           shadow-button hover:shadow-lg transition-all duration-300 
+           transform hover:translate-y-[-2px] active:translate-y-0 active:shadow-subtle
+           focus:outline-none focus:ring-2 focus:ring-morocco-red/50 focus:ring-offset-2;
+  }
+
+  .morocco-button-secondary {
+    @apply morocco-button bg-morocco-green hover:bg-morocco-green/90 focus:ring-morocco-green/50;
+  }
+
+  .morocco-button-accent {
+    @apply morocco-button bg-morocco-gold text-morocco-black hover:bg-morocco-gold/90 focus:ring-morocco-gold/50;
+  }
+
+  .form-section {
+    @apply glass-card p-6 md:p-8 mb-8 animate-fade-in-up opacity-0;
+    animation-fill-mode: forwards;
+  }
+
+  .form-section:nth-child(1) { animation-delay: 0.1s; }
+  .form-section:nth-child(2) { animation-delay: 0.2s; }
+  .form-section:nth-child(3) { animation-delay: 0.3s; }
+  .form-section:nth-child(4) { animation-delay: 0.4s; }
+  .form-section:nth-child(5) { animation-delay: 0.5s; }
+  .form-section:nth-child(6) { animation-delay: 0.6s; }
+
+  .section-chip {
+    @apply inline-block px-3 py-1 bg-morocco-sand text-morocco-black text-xs font-semibold rounded-full mb-2;
+  }
+
+  .checkbox-wrapper {
+    @apply flex items-center space-x-2 my-1;
+  }
+
+  .select-wrapper {
+    @apply relative;
+  }
+
+  .select-wrapper::after {
+    content: "▼";
+    @apply absolute right-4 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 pointer-events-none;
+  }
+
+  .ticket-option {
+    @apply relative rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer hover:border-morocco-gold hover:shadow-subtle;
+  }
+
+  .ticket-option.selected {
+    @apply border-morocco-gold bg-morocco-sand/10 shadow-subtle;
+  }
+
+  .ticket-option-radio {
+    @apply absolute opacity-0;
+  }
+
+  .ticket-chip {
+    @apply text-xs font-medium px-2 py-1 rounded-full bg-morocco-green text-white absolute top-2 right-2;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .progress-bar {
+    @apply fixed top-0 left-0 right-0 h-1 bg-morocco-gold origin-left z-50;
+  }
+
+  .flag-badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border;
+  }
+
+  .morocco-flag {
+    @apply block relative w-6 h-4 overflow-hidden mr-2;
+  }
+
+  .morocco-flag::before {
+    content: "";
+    @apply absolute inset-0 bg-morocco-red;
+  }
+
+  .morocco-flag::after {
+    content: "";
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-morocco-green;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+
+  .shimmer {
+    @apply relative overflow-hidden bg-gray-100;
+  }
+
+  .shimmer::after {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(255,255,255,0)_0%,rgba(255,255,255,0.8)_50%,rgba(255,255,255,0)_100%)] animate-shimmer;
+    background-size: 200% 100%;
   }
 }

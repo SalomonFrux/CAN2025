@@ -1,0 +1,11 @@
+
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#f5e9d9" />
+  <path d="M 100 20 C 145 20 180 55 180 100 C 180 145 145 180 100 180 C 55 180 20 145 20 100 C 20 55 55 20 100 20 Z" fill="none" stroke="#c1272d" stroke-width="4" />
+  <path d="M 100 30 C 140 30 170 60 170 100 C 170 140 140 170 100 170 C 60 170 30 140 30 100 C 30 60 60 30 100 30 Z" fill="none" stroke="#006233" stroke-width="3" />
+  <text x="100" y="85" font-family="Arial, sans-serif" font-weight="bold" font-size="24" text-anchor="middle" fill="#c1272d">CAN</text>
+  <text x="100" y="115" font-family="Arial, sans-serif" font-weight="bold" font-size="28" text-anchor="middle" fill="#006233">2025</text>
+  <text x="100" y="140" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#222222">MOROCCO</text>
+  <path d="M 85 50 L 90 60 L 100 62 L 90 64 L 85 74 L 80 64 L 70 62 L 80 60 Z" fill="#e6b55a" />
+  <path d="M 115 50 L 120 60 L 130 62 L 120 64 L 115 74 L 110 64 L 100 62 L 110 60 Z" fill="#e6b55a" />
+</svg>
