@@ -5,83 +5,72 @@
 
 @layer base {
   :root {
-    --background: 0 0% 99%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 20 14.3% 4.1%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 0 75% 42%;  /* Morocco Red */
+    --primary: 24 9.8% 10%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 150 100% 19%; /* Morocco Green */
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
 
-    --muted: 27 23% 90%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 42 75% 63%;  /* Morocco Gold */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Morocco theme colors */
+    --morocco-red: 357 72% 49%;
+    --morocco-green: 142 71% 28%;
+    --morocco-gold: 42 87% 55%;
+    --morocco-sand: 36 33% 94%;
+    --morocco-black: 0 0% 13%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
 
-    --primary: 0 75% 42%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
 
-    --secondary: 150 100% 19%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
 
-    --accent: 42 75% 63%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 60 9.1% 97.8%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
   }
 }
 
@@ -89,184 +78,21 @@
   * {
     @apply border-border;
   }
-
-  html, body {
-    @apply scroll-smooth;
-  }
-
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-sans tracking-tight;
-  }
-
-  h1 {
-    @apply text-4xl font-bold md:text-5xl;
-  }
-
-  h2 {
-    @apply text-3xl font-semibold md:text-4xl;
-  }
-
-  h3 {
-    @apply text-2xl font-semibold md:text-3xl;
-  }
-
-  h4 {
-    @apply text-xl font-semibold md:text-2xl;
-  }
-
-  h5 {
-    @apply text-lg font-semibold md:text-xl;
-  }
-
-  h6 {
-    @apply text-base font-semibold md:text-lg;
-  }
-
-  input, select, textarea {
-    @apply transition-all duration-200;
-  }
-
-  :focus-visible {
-    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    @apply bg-background text-foreground;
   }
 }
 
 @layer components {
-  .section-title {
-    @apply text-xl font-medium relative inline-block;
-  }
-
-  .section-title::after {
-    content: "";
-    @apply absolute bottom-0 left-0 w-full h-[2px] bg-morocco-red transform origin-bottom-left transition-all duration-300;
-  }
-
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl shadow-subtle;
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+    @apply bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg shadow-sm transition-all duration-300 hover:shadow-md;
   }
-
-  .form-input-wrapper {
-    @apply relative mb-4;
+  
+  .bg-morocco-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8102e' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 0h20L0 20z'/%3E%3C/g%3E%3C/svg%3E");
   }
-
-  .form-label {
-    @apply block text-sm font-medium text-gray-700 mb-1;
-  }
-
-  .form-input {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-morocco-gold focus:ring-1 focus:ring-morocco-gold transition-all duration-200 bg-white/80;
-  }
-
-  .input-icon {
-    @apply absolute left-3 top-9 text-gray-400;
-  }
-
-  .input-with-icon {
-    @apply pl-10;
-  }
-
-  .morocco-button {
-    @apply relative px-6 py-3 bg-morocco-red text-white font-semibold rounded-lg 
-           shadow-button hover:shadow-lg transition-all duration-300 
-           transform hover:translate-y-[-2px] active:translate-y-0 active:shadow-subtle
-           focus:outline-none focus:ring-2 focus:ring-morocco-red/50 focus:ring-offset-2;
-  }
-
-  .morocco-button-secondary {
-    @apply morocco-button bg-morocco-green hover:bg-morocco-green/90 focus:ring-morocco-green/50;
-  }
-
-  .morocco-button-accent {
-    @apply morocco-button bg-morocco-gold text-morocco-black hover:bg-morocco-gold/90 focus:ring-morocco-gold/50;
-  }
-
-  .form-section {
-    @apply glass-card p-6 md:p-8 mb-8 animate-fade-in-up opacity-0;
-    animation-fill-mode: forwards;
-  }
-
-  .form-section:nth-child(1) { animation-delay: 0.1s; }
-  .form-section:nth-child(2) { animation-delay: 0.2s; }
-  .form-section:nth-child(3) { animation-delay: 0.3s; }
-  .form-section:nth-child(4) { animation-delay: 0.4s; }
-  .form-section:nth-child(5) { animation-delay: 0.5s; }
-  .form-section:nth-child(6) { animation-delay: 0.6s; }
-
-  .section-chip {
-    @apply inline-block px-3 py-1 bg-morocco-sand text-morocco-black text-xs font-semibold rounded-full mb-2;
-  }
-
-  .checkbox-wrapper {
-    @apply flex items-center space-x-2 my-1;
-  }
-
-  .select-wrapper {
-    @apply relative;
-  }
-
-  .select-wrapper::after {
-    content: "▼";
-    @apply absolute right-4 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 pointer-events-none;
-  }
-
-  .ticket-option {
-    @apply relative rounded-xl border border-gray-200 p-4 transition-all duration-300 cursor-pointer hover:border-morocco-gold hover:shadow-subtle;
-  }
-
-  .ticket-option.selected {
-    @apply border-morocco-gold bg-morocco-sand/10 shadow-subtle;
-  }
-
-  .ticket-option-radio {
-    @apply absolute opacity-0;
-  }
-
-  .ticket-chip {
-    @apply text-xs font-medium px-2 py-1 rounded-full bg-morocco-green text-white absolute top-2 right-2;
-  }
-
-  .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
-  }
-
-  .progress-bar {
-    @apply fixed top-0 left-0 right-0 h-1 bg-morocco-gold origin-left z-50;
-  }
-
-  .flag-badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border;
-  }
-
-  .morocco-flag {
-    @apply block relative w-6 h-4 overflow-hidden mr-2;
-  }
-
-  .morocco-flag::before {
-    content: "";
-    @apply absolute inset-0 bg-morocco-red;
-  }
-
-  .morocco-flag::after {
-    content: "";
-    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-morocco-green;
-    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-  }
-
-  .shimmer {
-    @apply relative overflow-hidden bg-gray-100;
-  }
-
-  .shimmer::after {
-    content: '';
-    @apply absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(255,255,255,0)_0%,rgba(255,255,255,0.8)_50%,rgba(255,255,255,0)_100%)] animate-shimmer;
-    background-size: 200% 100%;
+  
+  .bg-can-logo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 90'%3E%3Ccircle cx='45' cy='45' r='45' fill='%23c8102e'/%3E%3Cpath d='M45 15L55 35L75 40L60 55L65 75L45 65L25 75L30 55L15 40L35 35L45 15Z' fill='%23006233'/%3E%3Cpath d='M45 25L50 38L65 40L55 50L58 65L45 58L32 65L35 50L25 40L40 38L45 25Z' fill='%23ffce08'/%3E%3C/svg%3E");
   }
 }

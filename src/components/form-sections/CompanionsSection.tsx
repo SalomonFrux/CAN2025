@@ -1,7 +1,10 @@
 
-import { useState, ChangeEvent } from "react";
-import { Users, UserPlus, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Users } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
 interface CompanionsSectionProps {
@@ -12,253 +15,221 @@ interface CompanionsSectionProps {
 }
 
 const CompanionsSection = ({ formData, updateFormData, onNext, onPrevious }: CompanionsSectionProps) => {
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
-  
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    
-    if (type === 'checkbox' || type === 'radio') {
-      const checked = (e.target as HTMLInputElement).checked;
-      
-      if (name === 'hasCompanions') {
-        updateFormData({ hasCompanions: checked });
-        
-        // If unchecked, clear companions list
-        if (!checked) {
-          updateFormData({ companions: [] });
-        }
-      }
-    } else {
-      updateFormData({ [name]: value });
-    }
-    
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = {...prev};
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-  
+  const [hasCompanions, setHasCompanions] = useState(formData.hasCompanions || false);
+  const [companions, setCompanions] = useState(formData.companions || [{ 
+    name: "", 
+    birthDate: "", 
+    gender: "", 
+    nationality: "", 
+    phone: "", 
+    email: "", 
+    address: "", 
+    relation: [] 
+  }]);
+
   const handleCompanionChange = (index: number, field: string, value: any) => {
-    const updatedCompanions = [...formData.companions];
+    const updatedCompanions = [...companions];
     updatedCompanions[index] = {
       ...updatedCompanions[index],
       [field]: value
     };
-    
-    updateFormData({ companions: updatedCompanions });
+    setCompanions(updatedCompanions);
   };
-  
-  const addCompanion = () => {
-    const newCompanion = {
-      fullName: "",
-      birthDate: "",
-      gender: "",
-      nationality: "",
-      phone: "",
-      email: "",
-      address: "",
-      relation: ""
-    };
+
+  const handleRelationChange = (index: number, relation: string, checked: boolean) => {
+    const updatedCompanions = [...companions];
+    const currentRelations = updatedCompanions[index].relation || [];
     
-    updateFormData({ 
-      companions: [...(formData.companions || []), newCompanion]
-    });
-  };
-  
-  const removeCompanion = (index: number) => {
-    const updatedCompanions = [...formData.companions];
-    updatedCompanions.splice(index, 1);
-    updateFormData({ companions: updatedCompanions });
-  };
-  
-  const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
-    
-    // If has companions is checked but no companions added
-    if (formData.hasCompanions && (!formData.companions || formData.companions.length === 0)) {
-      newErrors.companions = "Veuillez ajouter au moins une personne accompagnante";
-    }
-    
-    // Validate each companion's required fields if there are any companions
-    if (formData.companions && formData.companions.length > 0) {
-      formData.companions.forEach((companion: any, index: number) => {
-        if (!companion.fullName?.trim()) {
-          newErrors[`companion_${index}_fullName`] = "Nom complet requis";
-        }
-        
-        if (!companion.relation) {
-          newErrors[`companion_${index}_relation`] = "Relation requise";
-        }
-      });
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  
-  const handleNext = () => {
-    if (validateForm()) {
-      onNext();
+    if (checked) {
+      updatedCompanions[index].relation = [...currentRelations, relation];
     } else {
-      // Scroll to first error
-      const firstError = document.querySelector('.error-message');
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      updatedCompanions[index].relation = currentRelations.filter((r: string) => r !== relation);
     }
+    
+    setCompanions(updatedCompanions);
   };
-  
+
+  const addCompanion = () => {
+    setCompanions([...companions, { 
+      name: "", 
+      birthDate: "", 
+      gender: "", 
+      nationality: "", 
+      phone: "", 
+      email: "", 
+      address: "", 
+      relation: [] 
+    }]);
+  };
+
+  const removeCompanion = (index: number) => {
+    const updatedCompanions = [...companions];
+    updatedCompanions.splice(index, 1);
+    setCompanions(updatedCompanions);
+  };
+
+  const handleSubmit = () => {
+    updateFormData({
+      hasCompanions,
+      companions
+    });
+    onNext();
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="glass-card p-4 md:p-6 rounded-xl mb-6">
-        <h4 className="font-semibold text-lg mb-4">Personnes accompagnantes</h4>
-        
-        <div className="space-y-3">
-          <div className="flex items-center mb-4">
-            <label className="inline-flex items-center mr-4">
-              <input
-                type="radio"
-                name="hasCompanions"
-                checked={formData.hasCompanions === true}
-                onChange={() => updateFormData({ hasCompanions: true })}
-                className="form-radio h-4 w-4 text-morocco-red"
-              />
-              <span className="ml-2">Oui</span>
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="hasCompanions"
-                checked={formData.hasCompanions === false}
-                onChange={() => updateFormData({ hasCompanions: false })}
-                className="form-radio h-4 w-4 text-morocco-red"
-              />
-              <span className="ml-2">Non</span>
-            </label>
-          </div>
-          
-          {formData.hasCompanions && (
-            <div className="space-y-4">
-              {formData.companions && formData.companions.map((companion: any, index: number) => (
-                <div key={index} className="glass-card p-4 rounded-lg relative">
-                  <button 
-                    type="button" 
-                    onClick={() => removeCompanion(index)} 
-                    className="absolute top-2 right-2 text-morocco-red hover:bg-red-50 p-1 rounded-full"
-                  >
-                    <X size={18} />
-                  </button>
+    <div className="space-y-6 glass-card p-6">
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="hasCompanions">Personnes accompagnantes</Label>
+          <RadioGroup
+            value={hasCompanions ? "yes" : "no"}
+            onValueChange={(value) => setHasCompanions(value === "yes")}
+            className="flex items-center space-x-4 mt-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="yes" id="hasCompanions-yes" />
+              <Label htmlFor="hasCompanions-yes">Oui</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="no" id="hasCompanions-no" />
+              <Label htmlFor="hasCompanions-no">Non</Label>
+            </div>
+          </RadioGroup>
+        </div>
+
+        {hasCompanions && (
+          <div className="space-y-6 mt-4">
+            {companions.map((companion: any, index: number) => (
+              <div key={index} className="p-4 border border-gray-200 rounded-lg space-y-4 bg-white/50 backdrop-blur-sm">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-lg font-medium">Accompagnant {index + 1}</h4>
+                  {companions.length > 1 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => removeCompanion(index)}
+                      className="text-morocco-red hover:text-red-700"
+                    >
+                      Supprimer
+                    </Button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor={`companion-name-${index}`}>Nom et Prénom(s)</Label>
+                    <Input
+                      id={`companion-name-${index}`}
+                      value={companion.name}
+                      onChange={(e) => handleCompanionChange(index, 'name', e.target.value)}
+                    />
+                  </div>
                   
-                  <h5 className="font-medium mb-2">Personne {index + 1}</h5>
+                  <div className="space-y-2">
+                    <Label htmlFor={`companion-birthdate-${index}`}>Date de naissance</Label>
+                    <Input
+                      id={`companion-birthdate-${index}`}
+                      type="date"
+                      value={companion.birthDate}
+                      onChange={(e) => handleCompanionChange(index, 'birthDate', e.target.value)}
+                    />
+                  </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="form-input-wrapper">
-                      <label className="form-label">Nom complet</label>
-                      <input
-                        type="text"
-                        value={companion.fullName || ''}
-                        onChange={(e) => handleCompanionChange(index, 'fullName', e.target.value)}
-                        className={`form-input ${errors[`companion_${index}_fullName`] ? 'border-red-500' : ''}`}
-                        placeholder="Nom complet"
-                      />
-                      {errors[`companion_${index}_fullName`] && 
-                        <p className="text-red-500 text-xs mt-1 error-message">{errors[`companion_${index}_fullName`]}</p>
-                      }
-                    </div>
-                    
-                    <div className="form-input-wrapper">
-                      <label className="form-label">Nationalité</label>
-                      <input
-                        type="text"
-                        value={companion.nationality || ''}
-                        onChange={(e) => handleCompanionChange(index, 'nationality', e.target.value)}
-                        className="form-input"
-                        placeholder="Nationalité"
-                      />
-                    </div>
-                    
-                    <div className="form-input-wrapper">
-                      <label className="form-label">Email</label>
-                      <input
-                        type="email"
-                        value={companion.email || ''}
-                        onChange={(e) => handleCompanionChange(index, 'email', e.target.value)}
-                        className="form-input"
-                        placeholder="Email"
-                      />
-                    </div>
-                    
-                    <div className="form-input-wrapper">
-                      <label className="form-label">Téléphone</label>
-                      <input
-                        type="tel"
-                        value={companion.phone || ''}
-                        onChange={(e) => handleCompanionChange(index, 'phone', e.target.value)}
-                        className="form-input"
-                        placeholder="+XXX XXXXXXXX"
-                      />
-                    </div>
-                    
-                    <div className="form-input-wrapper">
-                      <label className="form-label">Lien de parenté</label>
-                      <select
-                        value={companion.relation || ''}
-                        onChange={(e) => handleCompanionChange(index, 'relation', e.target.value)}
-                        className={`form-input ${errors[`companion_${index}_relation`] ? 'border-red-500' : ''}`}
-                      >
-                        <option value="">Sélectionnez</option>
-                        <option value="Conjoint">Conjoint(e)</option>
-                        <option value="Enfant">Enfant</option>
-                        <option value="Parent">Parent</option>
-                        <option value="Ami">Ami(e)</option>
-                        <option value="Autre">Autre</option>
-                      </select>
-                      {errors[`companion_${index}_relation`] && 
-                        <p className="text-red-500 text-xs mt-1 error-message">{errors[`companion_${index}_relation`]}</p>
-                      }
+                  <div className="space-y-2">
+                    <Label>Sexe</Label>
+                    <RadioGroup
+                      value={companion.gender}
+                      onValueChange={(value) => handleCompanionChange(index, 'gender', value)}
+                      className="flex items-center space-x-4 mt-2"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="male" id={`companion-gender-male-${index}`} />
+                        <Label htmlFor={`companion-gender-male-${index}`}>Masculin</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="female" id={`companion-gender-female-${index}`} />
+                        <Label htmlFor={`companion-gender-female-${index}`}>Féminin</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor={`companion-nationality-${index}`}>Nationalité</Label>
+                    <Input
+                      id={`companion-nationality-${index}`}
+                      value={companion.nationality}
+                      onChange={(e) => handleCompanionChange(index, 'nationality', e.target.value)}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor={`companion-phone-${index}`}>Numéro de téléphone</Label>
+                    <Input
+                      id={`companion-phone-${index}`}
+                      value={companion.phone}
+                      onChange={(e) => handleCompanionChange(index, 'phone', e.target.value)}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor={`companion-email-${index}`}>Adresse e-mail</Label>
+                    <Input
+                      id={`companion-email-${index}`}
+                      type="email"
+                      value={companion.email}
+                      onChange={(e) => handleCompanionChange(index, 'email', e.target.value)}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor={`companion-address-${index}`}>Adresse de résidence</Label>
+                    <Input
+                      id={`companion-address-${index}`}
+                      value={companion.address}
+                      onChange={(e) => handleCompanionChange(index, 'address', e.target.value)}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2 md:col-span-2">
+                    <Label>Lien</Label>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {["Conjoint(e)", "Enfant", "Parent", "Ami"].map((relation) => (
+                        <div key={relation} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`relation-${relation}-${index}`}
+                            checked={(companion.relation || []).includes(relation)}
+                            onCheckedChange={(checked) => 
+                              handleRelationChange(index, relation, checked as boolean)
+                            }
+                          />
+                          <Label htmlFor={`relation-${relation}-${index}`}>{relation}</Label>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              ))}
-              
-              <Button 
-                type="button" 
-                onClick={addCompanion}
-                variant="outline" 
-                className="w-full flex items-center justify-center gap-2 py-2 border-dashed border-gray-300 hover:border-morocco-red hover:text-morocco-red"
-              >
-                <UserPlus size={18} />
-                <span>Ajouter une personne</span>
-              </Button>
-              
-              {errors.companions && <p className="text-red-500 text-xs mt-1 error-message">{errors.companions}</p>}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+            
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={addCompanion}
+              className="w-full mt-4 border-dashed border-2"
+            >
+              + Ajouter un autre accompagnant
+            </Button>
+          </div>
+        )}
       </div>
-      
-      <div className="mt-8 flex justify-between">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="morocco-button-secondary"
-          onClick={onPrevious}
-        >
+
+      <div className="flex justify-between mt-8">
+        <Button type="button" variant="outline" onClick={onPrevious}>
           Précédent
-        </motion.button>
-        
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="morocco-button"
-          onClick={handleNext}
-        >
+        </Button>
+        <Button type="button" onClick={handleSubmit}>
           Suivant
-        </motion.button>
+        </Button>
       </div>
     </div>
   );
